@@ -1,11 +1,12 @@
 import 'package:flutter_go_router_example/screen/1_basic_screen.dart';
+import 'package:flutter_go_router_example/screen/2_named_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../screen/root_screen.dart';
 
 // '/' > home
 // basic > basic screen
-
+// named
 final router = GoRouter(routes: [
   GoRoute(
       path: '/',
@@ -19,6 +20,12 @@ final router = GoRouter(routes: [
             path: 'basic',
             builder: (context, state) {
               return const BasicScreen();
+            }),
+        GoRoute(
+            path: 'named',
+            name: 'named_screen',
+            builder: (context, state) {
+              return const NamedScreen();
             })
       ]),
 ]);

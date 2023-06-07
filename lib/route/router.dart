@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_go_router_example/screen/10_transition_screen2.dart';
+import 'package:flutter_go_router_example/screen/11_error_screen.dart';
 import 'package:flutter_go_router_example/screen/1_basic_screen.dart';
 import 'package:flutter_go_router_example/screen/2_named_screen.dart';
 import 'package:flutter_go_router_example/screen/3_push_screen.dart';
@@ -161,4 +162,9 @@ final router = GoRouter(
               ])
         ],
       ),
-    ]);
+    ],
+    //gorouter의 error가 난 경우
+    errorBuilder: (context, state) =>
+        ErrorScreen(error: state.error.toString()),
+    //로그 보는 법 > goroute의 action을 로그로 볼 수 있음
+    debugLogDiagnostics: true);

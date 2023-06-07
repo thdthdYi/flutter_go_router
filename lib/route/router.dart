@@ -23,102 +23,127 @@ bool authState = false;
 // '/' > home
 // basic > basic screen
 // named
-final router = GoRouter(routes: [
-  GoRoute(
-    path: '/',
-    //path에 해당하는 화면 지정
-    builder: (context, state) =>
-        //이동할 페이지 반환
-        const RootScreen(),
+final router = GoRouter(
+    //모든 router에 적용되는 옵션
+    redirect: (context, state) {
+      //return string(path) > 해당 라우트로 이동 (path)
+      //return null > 원래 이동하려던 라우트로 이동
+
+      if (state.location == '/login/private' && !authState) {
+        return '/login';
+      }
+    },
     routes: [
       GoRoute(
-          path: 'basic',
-          builder: (context, state) {
-            return const BasicScreen();
-          }),
-      GoRoute(
-          path: 'named',
-          name: 'named_screen',
-          builder: (context, state) {
-            return const NamedScreen();
-          }),
-      GoRoute(
-          path: 'push',
-          builder: (context, state) {
-            return const PushScreen();
-          }),
-      GoRoute(
-          //pop
-          path: 'pop',
-          builder: (context, state) {
-            return const PopBaseScreen();
-          },
-          routes: [
-            GoRoute(
-              // pop/return
-              path: 'return',
+        path: '/',
+        //path에 해당하는 화면 지정
+        builder: (context, state) =>
+            //이동할 페이지 반환
+            const RootScreen(),
+        routes: [
+          GoRoute(
+              path: 'basic',
               builder: (context, state) {
-                return const PopReturnScreen();
+                return const BasicScreen();
+              }),
+          GoRoute(
+              path: 'named',
+              name: 'named_screen',
+              builder: (context, state) {
+                return const NamedScreen();
+              }),
+          GoRoute(
+              path: 'push',
+              builder: (context, state) {
+                return const PushScreen();
+              }),
+          GoRoute(
+              //pop
+              path: 'pop',
+              builder: (context, state) {
+                return const PopBaseScreen();
               },
-            ),
-          ]),
-      GoRoute(
-          //변수의 값을 가지고 옴 (/:id)
-          path: 'path_param/:id',
-          builder: (context, state) {
-            return const PathParamScreen();
-          },
-          routes: [
-            GoRoute(
-              path: ':name',
+              routes: [
+                GoRoute(
+                  // pop/return
+                  path: 'return',
+                  builder: (context, state) {
+                    return const PopReturnScreen();
+                  },
+                ),
+              ]),
+          GoRoute(
+              //변수의 값을 가지고 옴 (/:id)
+              path: 'path_param/:id',
               builder: (context, state) {
                 return const PathParamScreen();
               },
-            ),
-          ]),
-      GoRoute(
-        //pop
-        path: 'query_param',
-        builder: (context, state) {
-          return const QueryParameterScreen();
-        },
-      ),
-      ShellRoute(
-        builder: (context, state, child) => NestedScreen(child: child),
-        //child는 아래의 routhes에서 rendering됌.
+              routes: [
+                GoRoute(
+                  path: ':name',
+                  builder: (context, state) {
+                    return const PathParamScreen();
+                  },
+                ),
+              ]),
+          GoRoute(
+            //pop
+            path: 'query_param',
+            builder: (context, state) {
+              return const QueryParameterScreen();
+            },
+          ),
+          ShellRoute(
+            builder: (context, state, child) => NestedScreen(child: child),
+            //child는 아래의 routhes에서 rendering됌.
 
-        routes: [
-          // /nested/a
-          GoRoute(
-            path: 'nested/a',
-            builder: (_, state) => const NestedChildScreen(
-              routeName: '/nested/a',
-            ),
+            routes: [
+              // /nested/a
+              GoRoute(
+                path: 'nested/a',
+                builder: (_, state) => const NestedChildScreen(
+                  routeName: '/nested/a',
+                ),
+              ),
+              GoRoute(
+                path: 'nested/b',
+                builder: (_, state) => const NestedChildScreen(
+                  routeName: '/nested/b',
+                ),
+              ),
+              GoRoute(
+                path: 'nested/c',
+                builder: (_, state) => const NestedChildScreen(
+                  routeName: '/nested/c',
+                ),
+              )
+            ],
           ),
           GoRoute(
-            path: 'nested/b',
-            builder: (_, state) => const NestedChildScreen(
-              routeName: '/nested/b',
-            ),
+            path: 'login',
+            builder: (context, state) => const LoginScreen(),
+            routes: [
+              GoRoute(
+                path: 'private',
+                builder: (context, state) => const PrivateScreen(),
+              ),
+            ],
           ),
           GoRoute(
-            path: 'nested/c',
-            builder: (_, state) => const NestedChildScreen(
-              routeName: '/nested/c',
-            ),
-          )
+            path: 'login2',
+            builder: (context, state) => const LoginScreen(),
+            routes: [
+              GoRoute(
+                  path: 'private',
+                  builder: (context, state) => const PrivateScreen(),
+                  redirect: (context, state) {
+                    if (!authState) {
+                      return 'login2';
+                    }
+                    return null;
+                  }),
+            ],
+          ),
         ],
       ),
-      GoRoute(
-        path: 'login',
-        builder: (context, state) => const LoginScreen(),
-        routes: [
-          GoRoute(
-            path: 'private',
-            builder: (context, state) => const PrivateScreen(),
-          ),
-        ],
-      ),
-    ],
-  ),
-]);
+    ]);

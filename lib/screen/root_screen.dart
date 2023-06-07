@@ -20,7 +20,22 @@ class RootScreen extends StatelessWidget {
             onPressed: () {
               context.goNamed('named_screen');
             },
-            child: const Text('Go Named'))
+            child: const Text('Go Named')),
+        ElevatedButton(
+            onPressed: () {
+              context.go('/push');
+            },
+            child: const Text('Go Push')),
+        ElevatedButton(
+            onPressed: () {
+              context.go('/pop');
+            },
+            child: const Text('Go Pop')),
+        ElevatedButton(
+            onPressed: () {
+              context.go('/path_param/456');
+            },
+            child: const Text('Path Param'))
       ],
     ));
   }

@@ -15,13 +15,13 @@ class PushScreen extends StatelessWidget {
               //바로 전 route로 이동
               context.push('/basic');
             },
-            child: Text('Push Basic')),
+            child: const Text('Push Basic')),
         ElevatedButton(
             onPressed: () {
               //제일 상위 route로 이동
               context.go('/basic');
             },
-            child: Text('Go Basic'))
+            child: const Text('Go Basic'))
       ],
     ));
   }

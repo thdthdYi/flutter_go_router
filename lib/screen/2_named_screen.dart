@@ -6,6 +6,6 @@ class NamedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(body: Text('Named Screen'));
+    return const DefaultLayout(body: Text('Named Screen'));
   }
 }

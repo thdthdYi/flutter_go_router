@@ -14,7 +14,7 @@ class PopReturnScreen extends StatelessWidget {
         ElevatedButton(
             onPressed: () {
               //여러개의 값을 반환하고 싶을 경우에는 List,Class 등을 사용할 수 있음.
-              context.pop('Code Factory');
+              context.pop('thd');
             },
             child: const Text('Pop'))
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_go_router_example/screen/10_transition_screen2.dart';
 import 'package:flutter_go_router_example/screen/1_basic_screen.dart';
 import 'package:flutter_go_router_example/screen/2_named_screen.dart';
 import 'package:flutter_go_router_example/screen/3_push_screen.dart';
@@ -12,9 +13,7 @@ import 'package:flutter_go_router_example/screen/9_login_screen.dart';
 import 'package:flutter_go_router_example/screen/9_private_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../screen/8_nested_child_screen.dart';
-import '../screen/9_login_screen.dart';
-import '../screen/9_private_screen.dart';
+import '../screen/10_transition_screen1.dart';
 import '../screen/root_screen.dart';
 
 //auth의 상태에 따라 로그인이 됐는지 안됐는지 확인한다고 가정.
@@ -144,6 +143,22 @@ final router = GoRouter(
                   }),
             ],
           ),
+          GoRoute(
+              path: 'transition',
+              builder: (_, state) => const TransitionScreenOne(),
+              routes: [
+                GoRoute(
+                    path: 'detail',
+                    pageBuilder: (_, state) => CustomTransitionPage(
+                        child: const TransitionScreentwo(),
+                        transitionsBuilder:
+                            ((context, animation, secondaryAnimation, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        }))),
+              ])
         ],
       ),
     ]);
